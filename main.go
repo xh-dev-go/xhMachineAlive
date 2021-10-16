@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func send(w producer.XhKafkaProducer, kafkaTopic,key,name string){
+func send(w *producer.XhKafkaProducer, kafkaTopic,key,name string){
 	var headers = header.FromKafkaHeader([]kafka.Header{})
 	headers = headers.Add("Date", time.Now().String())
 	headers = headers.Add("KEY", key)
@@ -62,7 +62,7 @@ func main() {
 
 	w := producer.New(kafkaHost)
 	for{
-		send(w, kafkaTopic, key, name)
+		send(&w, kafkaTopic, key, name)
 		time.Sleep(time.Minute)
 	}
 }
